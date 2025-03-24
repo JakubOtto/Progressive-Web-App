@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", initMap);
 function sos() {
   if (navigator.vibrate) {
     navigator.vibrate([
-      100, 100, 100, 100, 100, 100,   
-      600, 100, 600, 100, 600, 100,   
-      100, 100, 100, 100, 100, 100    
+      100, 250, 100, 250, 100, 250,   
+      600, 250, 600, 250, 600, 250,   
+      100, 250, 100, 250, 100, 250    
     ]);
     } else {
     alert("Wibracje nie są obsługiwane na tym urządzeniu.");
