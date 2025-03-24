@@ -23,8 +23,12 @@ document.addEventListener("DOMContentLoaded", initMap);
 
 function sos() {
   if (navigator.vibrate) {
-    navigator.vibrate([200, 200, 200, 600, 600, 600, 200, 200, 200]);
-  } else {
+    navigator.vibrate([
+      100, 100, 100, 100, 100, 100,   
+      600, 100, 600, 100, 600, 100,   
+      100, 100, 100, 100, 100, 100    
+    ]);
+    } else {
     alert("Wibracje nie są obsługiwane na tym urządzeniu.");
   }
 }
