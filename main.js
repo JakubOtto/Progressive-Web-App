@@ -1,34 +1,30 @@
-var cacheName = 'hello-pwa';
-var filesToCache = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/js/main.js'
-];
+function initMap() {
+  if (!navigator.geolocation) {
+    alert("Twoja przeglądarka nie wspiera geolokalizacji.");
+    return;
+  }
 
-/* Start the service worker and cache all of the app's content */
-self.addEventListener('install', function(e) {
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      return cache.addAll(filesToCache);
-    })
-  );
-});
+  navigator.geolocation.getCurrentPosition(function (position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-/* Serve cached content when offline */
-self.addEventListener('fetch', function(e) {
-  e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request);
-    })
-  );
-});
+    const map = L.map('mapid').setView([lat, lon], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+    }).addTo(map);
 
-window.onload = () => {
-  'use strict';
+    L.marker([lat, lon]).addTo(map).bindPopup("Jesteś tutaj").openPopup();
+  }, function () {
+    alert("Nie można pobrać lokalizacji.");
+  });
+}
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-             .register('./sw.js');
+document.addEventListener("DOMContentLoaded", initMap);
+
+function sos() {
+  if (navigator.vibrate) {
+    navigator.vibrate([200, 200, 200, 600, 600, 600, 200, 200, 200]);
+  } else {
+    alert("Wibracje nie są obsługiwane na tym urządzeniu.");
   }
 }
